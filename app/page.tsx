@@ -1,14 +1,20 @@
-import { MenuIcon } from "lucide-react";
 import Header from "./_components/Header";
-import { Button } from "./_components/ui/button";
 import SearchInput from "./_components/search-input";
+import Image from "next/image";
+import Frame from "@/public/Frame.png";
 
 
  const Home = () =>  {
   return (
     <div className="bg-zinc-50 font-sans dark:bg-black">
       <Header />
-      <SearchInput />
+      <div className="space-y-4 px-5 py-6">
+        <SearchInput />
+        <Image src={Frame}
+         alt="Agende agora"
+         sizes="100vw"
+         className="w-full h-auto" />
+      </div>
     </div>
   );
 }
