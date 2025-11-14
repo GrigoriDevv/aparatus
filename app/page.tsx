@@ -10,7 +10,17 @@ import BarbershopItem from "./_components/barbershop-item";
 
  const Home =  async () =>  {
 
-  const barbershops = await prisma.barbershop.findMany()
+  const recomendedBarbershops = await prisma.barbershop.findMany({
+    orderBy: {
+      name: "asc",
+    }
+  })
+  
+  const popularBarbershops = await prisma.barbershop.findMany({
+    orderBy: {
+      name: "desc",
+    }
+  })
 
   return (
     <main className="bg-zinc-50 font-sans dark:bg-black p-5">
@@ -28,7 +38,7 @@ import BarbershopItem from "./_components/barbershop-item";
           barbershopImageUrl="https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png"
           date={new Date()}
          />
-         {barbershops.map((barbershop: Barbershop) => (
+         {recomendedBarbershops.map((barbershop: Barbershop) => (
           <BookingItem
             key={barbershop.id}
             serviceName="Corte de cabelo"
@@ -39,7 +49,16 @@ import BarbershopItem from "./_components/barbershop-item";
          ))}
          <h2 className="text-xs font-semibold uppercase text-foreground">Barbearias</h2>
         <div className="flex gap-2 overflow-x-auto w-full [&::-webkit-scrollbar]:hidden">
-        {barbershops.map((barbershop: Barbershop) => (
+        {recomendedBarbershops.map((barbershop: Barbershop) => (
+            <BarbershopItem
+              key={barbershop.id} 
+              barbershop={barbershop}
+            />
+          ))}
+        </div>
+        <h2 className="text-xs font-semibold uppercase text-foreground">Popular</h2>
+        <div className="flex gap-2 overflow-x-auto w-full [&::-webkit-scrollbar]:hidden">
+        {popularBarbershops.map((barbershop: Barbershop) => (
             <BarbershopItem
               key={barbershop.id} 
               barbershop={barbershop}
